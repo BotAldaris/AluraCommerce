@@ -13,6 +13,10 @@ import MaterialCommunityIcons from "react-native-vector-icons/Feather";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useContext } from "react";
 import { TemaContext, ITemaContext } from "../../contexts/TemaContext";
+import {
+  AutenticacaoContext,
+  IAutenticaoContext,
+} from "../../contexts/AutenticacaoContext";
 interface IProps {
   navigation: NativeStackNavigationProp<any>;
 }
@@ -20,11 +24,13 @@ export default function Principal({ navigation }: IProps) {
   const { temaEscolhido } = useContext(TemaContext) as ITemaContext;
   const estilo = estilos({ tema: temaEscolhido });
   const ultimosVistos: any[] = [];
+  const { usuario } = useContext(AutenticacaoContext) as IAutenticaoContext;
+
   return (
     <View style={estilo.container}>
       <StatusBar />
       <View style={estilo.tituloArea}>
-        <Text style={estilo.titulo}>Olá, NOME</Text>
+        <Text style={estilo.titulo}>Olá, {usuario?.nome}</Text>
         <View style={estilo.carrinhoArea}>
           <TouchableOpacity onPress={() => {}}>
             <Feather
