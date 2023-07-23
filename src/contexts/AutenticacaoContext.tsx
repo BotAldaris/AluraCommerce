@@ -1,5 +1,4 @@
 import { ReactNode, createContext, useState } from "react";
-import { escuro, claro } from "../estilosGlobais";
 interface IProps {
   children: ReactNode;
 }
@@ -17,7 +16,6 @@ export interface IAutenticaoContext {
   login: ({ ...IProps }) => "ok" | "Email ou senha incorretos";
   usuario: TUsuario;
 }
-export type TTema = typeof escuro;
 export const AutenticacaoContext = createContext({});
 
 export function AutenticacaoProvider({ children }: IProps) {

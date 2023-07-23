@@ -17,14 +17,20 @@ import {
   AutenticacaoContext,
   IAutenticaoContext,
 } from "../../contexts/AutenticacaoContext";
+import {
+  IProdutoContext,
+  ProdutosContext,
+} from "../../contexts/ProdutosContext";
 interface IProps {
   navigation: NativeStackNavigationProp<any>;
 }
 export default function Principal({ navigation }: IProps) {
   const { temaEscolhido } = useContext(TemaContext) as ITemaContext;
   const estilo = estilos({ tema: temaEscolhido });
-  const ultimosVistos: any[] = [];
   const { usuario } = useContext(AutenticacaoContext) as IAutenticaoContext;
+  const { quantidade, ultimosVistos } = useContext(
+    ProdutosContext
+  ) as IProdutoContext;
 
   return (
     <View style={estilo.container}>
@@ -40,9 +46,11 @@ export default function Principal({ navigation }: IProps) {
               style={estilo.carrinhoIcon}
             />
           </TouchableOpacity>
-          <View style={estilo.carrinhoQuantidadeArea}>
-            <Text style={estilo.carrinhoQuantidade}>0</Text>
-          </View>
+          {quantidade > 0 && (
+            <View style={estilo.carrinhoQuantidadeArea}>
+              <Text style={estilo.carrinhoQuantidade}>{quantidade}</Text>
+            </View>
+          )}
           <TouchableOpacity
             onPress={() => navigation.navigate("Configurações")}
             style={estilo.iconArea}
