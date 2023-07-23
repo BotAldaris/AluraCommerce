@@ -67,7 +67,7 @@ export default function Resumo({ navigation }: IProps) {
       <FlatList
         data={carrinho}
         keyExtractor={(item) => Math.random().toString()}
-        renderItem={({ item }) => <Produto item={item} adicionar={true} />}
+        renderItem={({ item }) => <Produto item={item} adicionar={false} />}
         style={estilo.lista}
         showsVerticalScrollIndicator={false}
       />

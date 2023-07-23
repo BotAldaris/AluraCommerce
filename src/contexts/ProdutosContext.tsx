@@ -14,6 +14,7 @@ export interface IProdutoContext {
   carrinho: IProduto[];
   ultimosVistos: IProduto[];
   viuProduto(produto: IProduto): Promise<void>;
+  precoTotal: number;
 }
 export interface IAutenticaoContext {}
 export const ProdutosContext = createContext({});
@@ -24,11 +25,17 @@ export function ProdutoProvider({ children }: IProps) {
   const [ultimosVistos, setUltimosVistos] = useState<IProduto[]>(
     [] as IProduto[]
   );
+  const [precoTotal, setPrecoTotal] = useState<number>(0);
   useEffect(() => {
     const pegaProdutos = async () => {
       const resultado = await PegarProdutos();
       setCarrinho(resultado);
       setQuantidade(resultado.length);
+      const valor = resultado.reduce(
+        (accumulator, currentValue) => accumulator + currentValue.preco,
+        0
+      );
+      setPrecoTotal(valor);
     };
     pegaProdutos();
   }, []);
@@ -41,10 +48,12 @@ export function ProdutoProvider({ children }: IProps) {
     let novoUltimosVistos = new Set(ultimosVistos);
     novoUltimosVistos.add(produto);
     setUltimosVistos([...novoUltimosVistos]);
+    let novoPrecoTotal = precoTotal + produto.preco;
+    setPrecoTotal(novoPrecoTotal);
   }
   return (
     <ProdutosContext.Provider
-      value={{ quantidade, carrinho, ultimosVistos, viuProduto }}
+      value={{ quantidade, carrinho, ultimosVistos, viuProduto, precoTotal }}
     >
       {children}
     </ProdutosContext.Provider>
