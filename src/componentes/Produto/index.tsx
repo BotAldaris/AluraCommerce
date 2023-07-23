@@ -12,7 +12,7 @@ export interface IProduto {
 }
 interface IProps {
   item: IProduto;
-  adicionar: any;
+  adicionar: boolean;
 }
 export function Produto({ item, adicionar }: IProps) {
   const { viuProduto } = useContext(ProdutosContext) as IProdutoContext;
